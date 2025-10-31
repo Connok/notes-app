@@ -1,22 +1,60 @@
 import { useState } from "react";
 
-const NoteForm = () => {
-  const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState("medium");
-  const [category, setCategory] = useState("work");
-  const [description, setDescription] = useState("");
+const NoteForm = ({ notes, setNotes }) => {
+  // State variables for form fields
+  // const [title, setTitle] = useState("");
+  // const [priority, setPriority] = useState("Medium");
+  // const [category, setCategory] = useState("Work");
+  // const [description, setDescription] = useState("");
+
+  // Alternatively, using a single state object for all form data
+  const [formData, setFormData] = useState({
+    title: "",
+    priority: "Medium",
+    category: "Work",
+    description: "",
+  });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+
+    //Valadation
+    if (!formData.title || !formData.description) return;
+
+    // Create note object
+    const newNote = {
+      id: Date.now(),
+      ...formData,
+    };
+
+    // Add notes to state
+    setNotes([newNote, ...notes]);
+
+    // Reset form fields
+    setFormData({
+      title: "",
+      priority: "Medium",
+      category: "Work",
+      description: "",
+    });
+  };
 
   return (
-    <form className="mb-6">
+    <form onSubmit={handleSubmit} className="mb-6">
       <div className="mb-4">
         <label htmlFor="title" className="block font-semibold">
           Title
         </label>
         <input
+          name="title"
           type="text"
           className="w-full p-2 border rounded-lg"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formData.title}
+          onChange={handleChange}
         />
       </div>
       <div className="mb-4">
@@ -24,14 +62,15 @@ const NoteForm = () => {
           Priority
         </label>
         <select
+          name="priority"
           type="text"
           className="w-full p-2 border rounded-lg"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
+          value={formData.priority}
+          onChange={handleChange}
         >
-          <option value="high">🚨High</option>
-          <option value="medium">⚠️Medium</option>
-          <option value="low">🐢Low</option>
+          <option value="High">🚨High</option>
+          <option value="Medium">⚠️Medium</option>
+          <option value="Low">🐢Low</option>
         </select>
       </div>
       <div className="mb-4">
@@ -39,14 +78,15 @@ const NoteForm = () => {
           Category
         </label>
         <select
+          name="category"
           type="text"
           className="w-full p-2 border rounded-lg"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={formData.category}
+          onChange={handleChange}
         >
-          <option value="work">🛠️Work</option>
-          <option value="personal">🎈Personal</option>
-          <option value="ideas">🤯Ideas</option>
+          <option value="Work">🛠️Work</option>
+          <option value="Personal">🎈Personal</option>
+          <option value="Ideas">🤯Ideas</option>
         </select>
       </div>
       <div className="mb-4">
@@ -54,10 +94,11 @@ const NoteForm = () => {
           Description
         </label>
         <textarea
+          name="description"
           type="text"
           className="w-full p-2 border rounded-lg"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formData.description}
+          onChange={handleChange}
         ></textarea>
       </div>
       <button className="w-full bg-purple-500 text-white py-2 rounded-lg curser-pointer hover:bg-purple-600">
