@@ -9,7 +9,7 @@ const TextArea = ({ label, name, value, onChange, required = false }) => {
         className="w-full p-2 border rounded-lg"
         value={value}
         onChange={onChange}
-        reqwuired={required}
+        required={required}
       ></textarea>
     </div>
   );

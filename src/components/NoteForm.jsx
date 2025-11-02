@@ -66,7 +66,7 @@ const NoteForm = ({ notes, setNotes }) => {
             label="Title"
             name="title"
             value={formData.title}
-            onChang={handleChange}
+            onChange={handleChange}
             required
           />
           <SelectInput
