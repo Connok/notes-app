@@ -5,10 +5,11 @@ const App = () => {
   const [notes, setNotes] = useState([]);
 
   const deleteNote = (id) => {
-    const confermDelete = window.confirm(
+    // Confirmation before deletion
+    const confirmDelete = window.confirm(
       "Are you sure you want to delete this note?"
     );
-    if (!confermDelete) return;
+    if (!confirmDelete) return;
     setNotes(notes.filter((note) => note.id !== id));
   };
 
